@@ -31,15 +31,21 @@ public class SubscribeActor extends UntypedActor {
     /**
      * 实现一种构造模式，这是推荐的最佳实践
      *
-     * @param actor
+     * @param actorClass
      * @return
      */
-    public static Props props(final Subscribe actor) {
-        return Props.create(new Creator<SubscribeActor>() {
-            public SubscribeActor create() throws Exception {
-                return new SubscribeActor(actor);
-            }
-        });
+    public static Props props(Class<Subscribe> actorClass) {
+        try {
+            Subscribe actor = actorClass.newInstance();
+            return Props.create(new Creator<SubscribeActor>() {
+                public SubscribeActor create() throws Exception {
+                    return new SubscribeActor(actor);
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

@@ -10,8 +10,13 @@ import org.wch.eventbus.repository.EventRepository;
 public class FinishActor extends UntypedActor {
     @Override
     public void onReceive(Object o) throws Exception {
-        FinishEvent event = (FinishEvent) o;
+        if (o instanceof FinishEvent) {
+            FinishEvent event = (FinishEvent) o;
+            System.out.println(event.getEvent().getUUID() + "-事件处理结束:" + event.getEvent() + "->" + event.getResult());
+            EventRepository.resume(event.getEvent().getUUID(), event.getResult());
+        } else {
+            unhandled(o);
+        }
 
-        EventRepository.resume(event.getEvent().getUUID(), event.getResult());
     }
 }

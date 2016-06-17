@@ -1,13 +1,13 @@
 package org.wch.eventbus.repository;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by weichunhe on 2016/6/17.
  */
 public class EventRepository {
-    private static HashMap<String, Thread> threadMap = new HashMap<String, Thread>();
-    private static HashMap<String, Object> resultMap = new HashMap<String, Object>();
+    private static ConcurrentHashMap<String, Thread> threadMap = new ConcurrentHashMap<String, Thread>();
+    private static ConcurrentHashMap<String, Object> resultMap = new ConcurrentHashMap<String, Object>();
 
     public static void suspend(String key) {
         threadMap.put(key, Thread.currentThread());

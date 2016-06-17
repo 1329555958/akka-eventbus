@@ -1,13 +1,11 @@
 package org.wch.eventbus;
 
-import akka.actor.Actor;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.event.EventStream;
 import org.wch.eventbus.actor.FinishActor;
 import org.wch.eventbus.actor.PersistenceActor;
-import org.wch.eventbus.actor.SubscribeActor;
 import org.wch.eventbus.actor.TopicActor;
 import org.wch.eventbus.event.Event;
 import org.wch.eventbus.event.FinishEvent;
@@ -39,14 +37,14 @@ public class EventBus {
         return EventRepository.getResult(e.getUUID());
     }
 
-    public static void subscribe(Class<? extends Actor> listener, Class message) {
-        ActorRef ref = SYSTEM.actorOf(TopicActor.props(listener));
-//        ActorRef ref = SYSTEM.actorOf(Props.create(listener));
-        EVENT_STREAM.subscribe(ref, message);
-    }
+//    public static void subscribe(Class<? extends Actor> listener, Class message) {
+//        ActorRef ref = SYSTEM.actorOf(TopicActor.props(listener));
+////        ActorRef ref = SYSTEM.actorOf(Props.create(listener));
+//        EVENT_STREAM.subscribe(ref, message);
+//    }
 
-    public static void subscribe(Subscribe actor, Class message) {
-        ActorRef ref = SYSTEM.actorOf(SubscribeActor.props(actor));
+    public static void subscribe(Class<? extends Subscribe> subscribe, Class message) {
+        ActorRef ref = SYSTEM.actorOf(TopicActor.props(subscribe));
         EVENT_STREAM.subscribe(ref, message);
     }
 

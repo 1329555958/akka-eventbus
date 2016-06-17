@@ -34,7 +34,7 @@ public class TopicActor extends UntypedActor {
         this.workActorClass = workActorClass;
         workActors = new ActorRef[works];
         for (int i = 0; i < works; i++) {
-            workActors[i] = getContext().actorOf(Props.create(workActorClass));
+            workActors[i] = getContext().actorOf(SubscribeActor.props(workActorClass));
         }
     }
 

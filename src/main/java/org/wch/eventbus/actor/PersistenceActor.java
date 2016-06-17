@@ -1,6 +1,7 @@
 package org.wch.eventbus.actor;
 
 import akka.actor.UntypedActor;
+import org.wch.eventbus.event.Event;
 
 /**
  * Created by weichunhe on 2016/6/17.
@@ -8,6 +9,8 @@ import akka.actor.UntypedActor;
 public class PersistenceActor extends UntypedActor {
     @Override
     public void onReceive(Object o) throws Exception {
-        System.out.println("repository event" + o);
+        if (o instanceof Event) {
+            System.out.println("持久化事件-" + ((Event) o).getUUID());
+        }
     }
 }

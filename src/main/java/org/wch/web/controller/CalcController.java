@@ -23,6 +23,6 @@ public class CalcController {
 
     @PostConstruct
     public void init() {
-        EventBus.subscribe(new AddSubscribe(), AddEvent.class);
+        EventBus.subscribe(AddSubscribe.class, AddEvent.class);
     }
 }
