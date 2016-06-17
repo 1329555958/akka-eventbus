@@ -6,6 +6,7 @@ import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.Creator;
 import org.wch.eventbus.EventBus;
+import org.wch.eventbus.event.Event;
 import org.wch.eventbus.event.FinishEvent;
 import org.wch.eventbus.subscribe.Subscribe;
 
@@ -23,7 +24,7 @@ public class SubscribeActor extends UntypedActor {
 
     @Override
     public void onReceive(Object o) throws Exception {
-        finish(o, actor.apply(o));
+        finish((Event) o, actor.apply(o));
     }
 
 
@@ -42,7 +43,7 @@ public class SubscribeActor extends UntypedActor {
     }
 
 
-    private void finish(Object param, Object result) {
-        EventBus.publish(new FinishEvent(param, result));
+    private void finish(Event param, Object result) {
+        EventBus.publish(new FinishEvent<Event, Object>(param, result));
     }
 }
