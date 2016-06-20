@@ -16,11 +16,13 @@ public class TransformationFrontend extends UntypedActor {
 
     @Override
     public void onReceive(Object message) {
+        System.out.println("receive message:" + message);
         if ((message instanceof TransformationJob) && backends.isEmpty()) {
             TransformationJob job = (TransformationJob) message;
             getSender().tell(
                     new JobFailed("Service unavailable, try again later", job),
                     getSender());
+            System.out.println("job faild");
 
         } else if (message instanceof TransformationJob) {
             TransformationJob job = (TransformationJob) message;
@@ -29,6 +31,7 @@ public class TransformationFrontend extends UntypedActor {
                     .forward(job, getContext());
 
         } else if (message.equals(BACKEND_REGISTRATION)) {
+            System.out.println("backend found");
             getContext().watch(getSender());
             backends.add(getSender());
 

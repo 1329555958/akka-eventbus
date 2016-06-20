@@ -17,7 +17,7 @@ import org.wch.eventbus.subscribe.Subscribe;
  */
 public class EventBus {
 
-    private static final ActorSystem SYSTEM = ActorSystem.create("mySystem");
+    private static final ActorSystem SYSTEM = ActorSystem.create("ClusterSystem");
     private static final EventStream EVENT_STREAM = SYSTEM.eventStream();
 
     static {
